@@ -11,7 +11,7 @@ const config = {
   quoteProps: 'as-needed',
   jsxSingleQuote: false,
   trailingComma: 'es5',
-  bracketSpacing: false,
+  bracketSpacing: true,
   arrowParens: 'always',
   endOfLine: 'auto',
   bracketSameLine: false
