@@ -11,10 +11,10 @@ export async function createOrganization(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .post(
-      "/organization",
+      "/organizations",
       {
         schema: {
-          tags: ["organization"],
+          tags: ["organizations"],
           summary: "Create a new organization",
           security: [
             {
@@ -26,27 +26,29 @@ export async function createOrganization(app: FastifyInstance) {
             domain: z.string().nullish(),
             shouldAttachUsersByDomain: z.boolean().optional(),
           }),
-          response:{
+          response: {
             201: z.object({
-              organizationId: z.string().uuid()
-            })
-          }
+              organizationId: z.string().uuid(),
+            }),
+          },
         },
       },
       async (req, reply) => {
         const userId = await req.getCurrentUserId()
 
-        const {name, domain, shouldAttachUsersByDomain} = req.body
+        const { name, domain, shouldAttachUsersByDomain } = req.body
 
-        if(domain) {
+        if (domain) {
           const organization = await prisma.organization.findUnique({
             where: {
-              domain
-            }
+              domain,
+            },
           })
 
-          if(organization){
-            throw new BadRequestError('Another organization with same domain already exists.')
+          if (organization) {
+            throw new BadRequestError(
+              "Another organization with same domain already exists."
+            )
           }
         }
 
@@ -60,13 +62,13 @@ export async function createOrganization(app: FastifyInstance) {
             members: {
               create: {
                 userId,
-                role: 'ADMIN'
-              }
-            }
-          }
+                role: "ADMIN",
+              },
+            },
+          },
         })
 
-        return reply.status(201).send({ organizationId: organization.id})
+        return reply.status(201).send({ organizationId: organization.id })
       }
     )
 }
