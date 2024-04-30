@@ -50,6 +50,9 @@ export async function getOrganizations(app: FastifyInstance) {
               select: {
                 role: true,
               },
+              where: {
+                userId,
+              },
             },
           },
           where: {
