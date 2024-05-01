@@ -34,6 +34,7 @@ import { getMembers } from "./routes/member/get-members"
 import { updateMember } from "./routes/member/update-member"
 import { removeMember } from "./routes/member/remove-member"
 import { createInvite } from "./routes/invites/create-invite"
+import { getInvite } from "./routes/invites/get-invite"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -98,6 +99,7 @@ app.register(updateMember)
 app.register(removeMember)
 
 app.register(createInvite)
+app.register(getInvite)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log("listening on port 3333")
