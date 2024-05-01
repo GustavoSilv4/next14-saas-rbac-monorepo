@@ -39,6 +39,7 @@ import { getInvites } from "./routes/invites/get-invites"
 import { acceptInvite } from "./routes/invites/accept-invite"
 import { rejectInvite } from "./routes/invites/reject-invite"
 import { revokeInvite } from "./routes/invites/revoke-invite"
+import { getPedingInvite } from "./routes/invites/get-peding-invites"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -108,6 +109,7 @@ app.register(getInvites)
 app.register(acceptInvite)
 app.register(rejectInvite)
 app.register(revokeInvite)
+app.register(getPedingInvite)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log("listening on port 3333")
